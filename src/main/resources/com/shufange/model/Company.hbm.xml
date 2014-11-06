@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.shufange.hibernatemavenproject.model.Company" table="COMPANY">
+        <id name="companyId" type="int">
+            <column name="CID" precision="11" scale="0" />
+            <generator class="assigned" />
+        </id>     
+        
+        <set name="employees" lazy="false" cascade="all" inverse="true">
+            <key column="CID"/>
+            <one-to-many class="com.shufange.hibernatemavenproject.model.Employee"/> 
+        </set>
+            
+        <!--property element mapping java class properties and table column can be written as such -->
+        <property name="companyName" type="string" column="CNAME" length="30" not-null="true"/>
+        <!--or as such -->
+               
+    </class>
+    
+    <class name="com.shufange.hibernatemavenproject.model.Employee" table="EMPLOYEE"> 
+        <meta attribute="class-description">
+            This is class of Employee
+        </meta>
+        
+        <id name="employeeId" type="int" column="ID" >
+            <generator class="assigned"/>
+        </id>
+        
+        <many-to-one name="company" column="CID" class="com.shufange.hibernatemavenproject.model.Company"/>
+                      
+        <property name="firstName" type="string" column="FIRST_NAME" length="30" not-null="true"/>
+        <property name="lastName" type="string" column="LAST_NAME" length="30" not-null="true"/>
+        <property name="salary" type="int" column="SALARY" not-null="true"/>
+        
+    </class>
+   
+ 
+</hibernate-mapping>
